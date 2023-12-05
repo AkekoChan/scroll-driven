@@ -1,0 +1,42 @@
+.hero {
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  view-timeline: --hero-vtl;
+  position: relative;
+}
+
+.hero__title {
+  font-size: var(--font-48px-3rem);
+  font-weight: 600;
+  text-align: center;
+}
+
+.mouseDraw {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  translate: -50% 0 0;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.mouseDraw__svg path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dash 5s forwards;
+  animation-timeline: --hero-vtl;
+  animation-range: exit-crossing;
+}
