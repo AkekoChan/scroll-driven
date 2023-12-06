@@ -6,10 +6,13 @@
 @import "blocs/timeline.css";
 
 :root {
+  /* colors */
   --white-1: #f6f8ff;
   --gray-1: #50514f;
   --black-1: #272d2d;
   --red-1: #d2042d;
+
+  /* font size */
   --font-10px-0_625rem: 0.625rem;
   --font-12px-0_75rem: 0.75rem;
   --font-14px-0_875rem: 0.875rem;
