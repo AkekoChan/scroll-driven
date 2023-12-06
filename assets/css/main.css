@@ -3,6 +3,7 @@
 
 @import "blocs/hero.css";
 @import "blocs/reveal.css";
+@import "blocs/about.css";
 @import "blocs/timeline.css";
 
 :root {
@@ -37,16 +38,31 @@ input::placeholder {
   font-family: "Oswald", sans-serif;
 }
 
-body {
-  min-width: 320px;
+main {
+  max-width: 530px;
+  margin: 0 auto;
 }
 
+section {
+  padding: 2rem;
+}
 img {
   max-width: 100%;
 }
 
 a {
   text-decoration: none;
+}
+
+b {
+  font-weight: 600;
+}
+
+.code {
+  background: var(--black-1);
+  color: var(--white-1);
+  white-space: pre;
+  border-radius: 0.875rem;
 }
 
 .no-support {

@@ -1,0 +1,55 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about__title {
+  font-size: var(--font-32px-2rem);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.about__exemple {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about__test {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.about__test-btn {
+  background: var(--black-1);
+  color: var(--white-1);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.875rem;
+  border: none;
+  cursor: pointer;
+}
+.square {
+  height: 4rem;
+  width: 4rem;
+  background: red;
+}
+
+.square.active {
+  animation: scale-and-change-color ease 2s;
+}
+
+@keyframes scale-and-change-color {
+  0% {
+    rotate: 0deg;
+    background: red;
+  }
+
+  100% {
+    rotate: 90deg;
+    background: green;
+  }
+}

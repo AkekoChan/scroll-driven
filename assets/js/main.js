@@ -1,6 +1,6 @@
 import "./hero.js";
 import "./timeline.js";
-
+import "./about.js";
 
 ("use strict");
 (function () {
