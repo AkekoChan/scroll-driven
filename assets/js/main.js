@@ -1,6 +1,7 @@
 import "./hero.js";
 import "./timeline.js";
 
+
 ("use strict");
 (function () {
   const App = {
