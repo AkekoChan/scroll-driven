@@ -2,13 +2,14 @@
 @import "vendor/reset.css";
 
 @import "blocs/hero.css";
-@import "blocs/timeline.css";
 @import "blocs/reveal.css";
+@import "blocs/timeline.css";
 
 :root {
   --white-1: #f6f8ff;
   --gray-1: #50514f;
   --black-1: #272d2d;
+  --red-1: #d2042d;
   --font-10px-0_625rem: 0.625rem;
   --font-12px-0_75rem: 0.75rem;
   --font-14px-0_875rem: 0.875rem;
@@ -43,4 +44,55 @@ img {
 
 a {
   text-decoration: none;
+}
+
+.no-support {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50% 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  background: var(--white-1);
+  border-radius: var(--font-10px-0_625rem);
+}
+
+.no-support__close {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  font-size: var(--font-32px-2rem);
+  color: var(--black-1);
+  cursor: pointer;
+}
+
+.no-support__svg {
+  width: 3rem;
+  height: 3rem;
+
+  & path {
+    fill: var(--red-1);
+  }
+}
+
+.no-support__blur {
+  position: fixed;
+  border: 2px solid var(--black-1);
+  z-index: 998;
+  background-color: rgba(172, 172, 172, 0.4);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+@supports (timeline-scope: none) {
+  .no-support,
+  .no-support__blur {
+    display: none;
+  }
 }
