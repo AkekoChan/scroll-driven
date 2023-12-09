@@ -7,9 +7,7 @@ import "./no-support-modal.js";
 ("use strict");
 (function () {
   const App = {
-    DOM: {
-      // revealElements: $$(".bottom-fade"),
-    },
+    DOM: {},
 
     init: () => {
       App.event();
