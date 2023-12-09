@@ -1,5 +1,6 @@
 const cacheFirst = async ({ request, fallbackUrl }) => {
-  const responseFromCache = await caches.match(request);
+  const staticCache = await caches.open("static-cache");
+  const responseFromCache = await staticCache.match(request);
   if (responseFromCache) {
     return responseFromCache;
   }
@@ -7,6 +8,7 @@ const cacheFirst = async ({ request, fallbackUrl }) => {
     const responseFromNetwork = await fetch(request);
     const cache = await caches.open("cache");
     await cache.put(request, responseFromNetwork.clone());
+    console.log("ok");
     return responseFromNetwork;
   } catch (error) {
     const fallbackResponse = await caches.match(fallbackUrl);
