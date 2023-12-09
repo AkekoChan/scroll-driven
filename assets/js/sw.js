@@ -36,7 +36,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     cacheFirst({
       request: event.request,
-      fallbackUrl: "/gallery/myLittleVader.jpg",
+      fallbackUrl: "/assets/img/logo-scroll-driven.jpg",
     })
   );
 });
