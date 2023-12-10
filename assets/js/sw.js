@@ -1,42 +1,81 @@
-const putInCache = async (request, response) => {
-  const cache = await caches.open("v1");
-  await cache.put(request, response);
-};
+const cacheName = "scroll-driven-cache-v1";
+const appShellFiles = [
+  "/index.html",
+  "/manifest.webmanifest",
+  "/assets/js/about.js",
+  "/assets/js/btn-pwa.js",
+  "/assets/js/hero.js",
+  "/assets/js/main.js",
+  "/assets/js/sw.js",
+  "/assets/js/timeline.js",
+  "/assets/js/utility.js",
+  "/assets/css/main.css",
+  "/assets/css/blocs/about.css",
+  "/assets/css/blocs/hero.css",
+  "/assets/css/blocs/reveal.css",
+  "/assets/css/blocs/timeline.css",
+  "/assets/css/global/font.css",
+  "/assets/css/vendor/reset.css",
+  "/assets/img/view-explication1.jpg",
+  "/assets/img/view-explication2.jpg",
+  "/assets/img/logo-scroll-driven.svg",
+  "/assets/fonts/Oswald-Regular.woff2",
+  "/assets/fonts/Oswald-Regular.woff",
+  "/assets/fonts/Oswald-SemiBold.woff2",
+  "/assets/fonts/Oswald-SemiBold.woff",
+];
 
-const cacheFirst = async ({ request, fallbackUrl }) => {
-  // Pour commencer on essaie d'obtenir la ressource depuis le cache
-  const responseFromCache = await caches.match(request);
-  if (responseFromCache) {
-    return responseFromCache;
-  }
+self.addEventListener("install", (e) => {
+  console.log("[Service Worker] Install");
+  e.waitUntil(
+    (async () => {
+      const cache = await caches.open(cacheName);
+      console.log("[Service Worker] Caching all: app shell and content");
 
-  // Ensuite, on tente de l'obtenir du réseau
+      const addAllPromises = appShellFiles.map(async (url) => {
+        try {
+          const response = await fetch(url);
+          await cache.put(url, response.clone());
+        } catch (error) {
+          console.error(
+            "[Service Worker] Cache add error for",
+            url,
+            ":",
+            error
+          );
+        }
+      });
+
+      await Promise.all(addAllPromises);
+    })()
+  );
+});
+
+const networkFirst = async ({ request, fallbackUrl }) => {
   try {
     const responseFromNetwork = await fetch(request);
-    // Une réponse ne peut être utilisée qu'une fois
-    // On la clone pour en mettre une copie en cache
-    // et servir l'originale au navigateur
-    putInCache(request, responseFromNetwork.clone());
+    console.log(responseFromNetwork);
+    const cache = await caches.open(cacheName);
+
+    await cache.put(request, responseFromNetwork.clone());
+
     return responseFromNetwork;
   } catch (error) {
+    const responseFromCache = await caches.match(request);
+
+    if (responseFromCache) {
+      return responseFromCache;
+    }
+
     const fallbackResponse = await caches.match(fallbackUrl);
+
     if (fallbackResponse) {
       return fallbackResponse;
     }
-    // Quand il n'y a même pas de contenu par défaut associé
-    // on doit tout de même renvoyer un objet Response
-    return new Response("Une erreur réseau s'est produite", {
+
+    return new Response("Network error", {
       status: 408,
       headers: { "Content-Type": "text/plain" },
     });
   }
 };
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    cacheFirst({
-      request: event.request,
-      fallbackUrl: "/assets/img/logo-scroll-driven.jpg",
-    })
-  );
-});
